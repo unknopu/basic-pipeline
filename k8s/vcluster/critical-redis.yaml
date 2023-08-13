@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-critical
+spec:
+  selector:
+    matchLabels:
+      app: redis-critical
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis-critical
+    spec:
+      containers:
+      - name: redis-server
+        image: redis:7.0.12-alpine3.18
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - redis-critical
+            topologyKey: "kubernetes.io/hostname"

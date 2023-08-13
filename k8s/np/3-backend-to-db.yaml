@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-to-db-only
+  namespace: training9-bookinfo-dev
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: bookinfo-dev-ratings-mongodb
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: bookinfo-dev-ratings
+    ports:
+    - port: 27017

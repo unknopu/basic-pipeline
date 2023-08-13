@@ -1,0 +1,10 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: block-external-namespace-traffic
+  namespace: training[X]-bookinfo-dev
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress: []

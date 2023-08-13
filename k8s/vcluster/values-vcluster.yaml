@@ -1,0 +1,10 @@
+syncer:
+  extraArgs:
+  - --tls-san=training9.vcluster.calllab.co.th
+sync:
+  ingresses:
+    enabled: true
+  nodes:
+    enabled: true
+    enableScheduler: true
+    syncAllNodes: true

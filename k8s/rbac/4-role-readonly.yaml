@@ -1,0 +1,65 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: role-readonly
+  namespace: training9-bookinfo-dev
+rules:
+- apiGroups:
+  - ""
+  - "apps"
+  - "networking.k8s.io"
+  - "autoscaling"
+  - "batch"
+  resources:
+  - deployments
+  - pods
+  - pods/log
+  - replicationcontrollers
+  - replicasets
+  - statefulsets
+  - cronjobs
+  - jobs
+  - services
+  - ingresses
+  - configmaps
+  - daemonsets
+  - horizontalpodautoscalers
+  - cronjobs
+  - jobs
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  - "apps"
+  - "networking.k8s.io"
+  resources:
+  - "configmaps"
+  verbs:
+  - create
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+  - get
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: role-readonly-binding
+  namespace: training9-bookinfo-dev
+roleRef:
+  kind: Role
+  name: role-readonly
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: training9
+    namespace: training9-bookinfo-dev

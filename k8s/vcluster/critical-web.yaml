@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-critical
+  labels:
+    app: web-critical
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-critical
+  template:
+    metadata:
+      labels:
+        app: web-critical
+    spec:
+      containers:
+      - name: hello
+        image: nginxdemos/hello:0.3-plain-text
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - web-critical
+            topologyKey: "kubernetes.io/hostname"
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - redis-critical
+            topologyKey: "kubernetes.io/hostname"
+
+

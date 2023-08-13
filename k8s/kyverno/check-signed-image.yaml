@@ -1,0 +1,22 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: check-signed-image
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+  - name: check-signed-image
+    match:
+      resources:
+        kinds:
+        - Pod
+    verifyImages:
+    - image: "harbor.demo.calllab.co.th/bookinfo/training9/ratings:*"
+      key: |-
+        -----BEGIN PUBLIC KEY-----
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEaIg+WWaCWAZ6pWRZnj7BsogGerA/
+        6zfSqd3fFzrrbPldxaTu0/0wt7BGUgsB0b3O6YzD5fRL9a10eFisMyYIXQ==
+        -----END PUBLIC KEY-----
+
+

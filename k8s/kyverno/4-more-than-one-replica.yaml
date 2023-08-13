@@ -1,0 +1,23 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: require-run-as-nonroot
+  namespace: training9-sec
+spec:
+  background: false
+  rules:
+  - name: higherthanone
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment/scale
+      - resources:
+          kinds:
+          - Deployment
+    validate:
+      message: >-
+        eieieieieiei.          
+      pattern:
+      - spec:
+          replicas: ">1"  

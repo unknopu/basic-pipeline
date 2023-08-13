@@ -1,0 +1,19 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: require-run-as-nonroot
+  namespace: training9-sec
+spec:
+  validationFailureAction: Enforce
+  rules:
+  - name: Cluster-svc
+    match:
+      resources:
+        kinds:
+        - Service
+    validate:
+      message: >-
+        eiei`.          
+      pattern:
+        spec:
+          type: "!ClusterIP"

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-gpu
+  labels:
+    app: web-gpu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-gpu
+  template:
+    metadata:
+      labels:
+        app: web-gpu
+    spec:
+      containers:
+      - name: hello
+        image: nginxdemos/hello:0.3-plain-text
+      tolerations:
+      - key: "workload"
+        operator: "Equal"
+        value: "gpu"
+        effect: "NoSchedule"

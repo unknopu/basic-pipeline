@@ -1,0 +1,28 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: disallow-privileged-containers
+  namespace: training9-sec
+spec:
+  validationFailureAction: Enforce
+  rules:
+    - name: privileged-containers
+      match:
+        resources:
+          kinds:
+          - Pod
+      validate:
+        message: >-
+          Privileged mode is disallowed. The fields spec.containers[*].securityContext.privileged
+          and spec.initContainers[*].securityContext.privileged must be unset or set to `false`.          
+        pattern:
+          spec:
+            =(ephemeralContainers):
+              - =(securityContext):
+                  =(privileged): "false"
+            =(initContainers):
+              - =(securityContext):
+                  =(privileged): "false"
+            containers:
+              - =(securityContext):
+                  =(privileged): "false"

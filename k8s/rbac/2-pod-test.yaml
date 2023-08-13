@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-test
+  namespace: training9-bookinfo-dev
+spec:
+  serviceAccount: training9
+  containers:
+  - name: pod-test
+    image: calllab/gcloud-helm:438.0.0-alpine-v3.12.2
+    command:
+    - sleep
+    - "36000"
